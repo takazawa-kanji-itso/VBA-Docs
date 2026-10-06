@@ -11,7 +11,7 @@ ms.localizationpriority: medium
 
 # Queries.FastCombine property (Excel)
 
-**True** if Power Query ignores privacy levels when it combines data from different data sources in the workbook (the fast combine feature). **False** if the [Data Privacy Firewall](/power-query/data-privacy-firewall) is applied. Read/write **Boolean**.
+**True** if Power Query ignores privacy levels when it combines data from different data sources in the workbook (the fast combine feature). **False** if Power Query combines data according to the privacy level settings of each data source (see [Data Privacy Firewall](/power-query/data-privacy-firewall)). Read/write **Boolean**.
 
 
 ## Syntax
@@ -27,7 +27,7 @@ The default value for a new workbook is **False**.
 
 The setting is stored in the workbook. If you set **FastCombine** and then save the workbook, the value is kept when the workbook is opened again. If you close the workbook without saving it, the change is discarded.
 
-When **FastCombine** is **False**, queries that combine data from more than one data source, such as a folder path read from a named range by using **Excel.CurrentWorkbook** and the files in that folder, can take noticeably longer to refresh or can fail with a `Formula.Firewall` error, depending on how the queries are structured. Setting **FastCombine** to **True** can avoid both, but data from one source can then be sent to another source. Set it to **True** only when all the data sources in the workbook can safely share data with each other.
+When **FastCombine** is **False**, queries that combine data from more than one data source can take longer to refresh or can fail with a `Formula.Firewall` error, depending on how the queries are structured. Setting **FastCombine** to **True** can avoid both, but data from one source can then be sent to another source. Set it to **True** only when all the data sources in the workbook can safely share data with each other.
 
 For silent refresh operations, use the **FastCombine** property in conjunction with the **[Application.DisplayAlerts](Excel.Application.DisplayAlerts.md)** property set to **False**. 
 
@@ -38,6 +38,7 @@ This example ignores privacy levels for the active workbook and then refreshes a
 
 ```vb
 Sub RefreshLocalQueries()
+    ' This setting is saved with the workbook if the workbook is saved.
     ActiveWorkbook.Queries.FastCombine = True
     ActiveWorkbook.RefreshAll
 End Sub

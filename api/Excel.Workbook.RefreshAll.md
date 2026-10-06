@@ -6,7 +6,7 @@ f1_keywords:
 api_name:
 - Excel.Workbook.RefreshAll
 ms.assetid: c1a956dc-263c-5c24-3b51-fc4af22dcd33
-ms.date: 05/29/2019
+ms.date: 10/06/2026
 ms.localizationpriority: medium
 ---
 
@@ -26,6 +26,8 @@ _expression_ A variable that represents a **[Workbook](Excel.Workbook.md)** obje
 ## Remarks
 
 Objects that have the **[BackgroundQuery](Excel.PivotCache.BackgroundQuery.md)** property set to **True** are refreshed in the background.
+
+If a Power Query query that a connection loads into a worksheet table results in an error when it's evaluated, **RefreshAll** doesn't raise a run-time error. This is also the case when background refresh is turned off for every connection. The other connections are still refreshed, and the table loaded by that connection keeps its previous data. To detect these errors, refresh each query table separately by using the **[QueryTable.Refresh](Excel.QueryTable.Refresh.md)** method and handle the error that it raises.
 
 
 ## Example

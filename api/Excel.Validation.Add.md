@@ -44,7 +44,9 @@ The **Add** method requires different arguments, depending on the validation typ
 | **xlValidateList**| **Formula1** is required, **Formula2** is ignored. **Formula1** must contain either a comma-delimited list of values or a worksheet reference to this list.|
 | **xlValidateWholeNumber**, **xlValidateDate**, **xlValidateDecimal**, **xlValidateTextLength**, or **xlValidateTime**|One of either **Formula1** or **Formula2** must be specified, or both may be specified.|
 
-As in the **Data Validation** dialog box, **Formula1** and **Formula2** can't contain a structured reference to a table, such as `=Table1[Category]`, `=COUNTIF(Table1[Category],A2)>0`, or `=MAX(Table1[Amount])`. Passing one causes run-time error 1004 ("Application-defined or object-defined error"), even though the same reference works in a worksheet formula. To base a rule on a table column, refer to the column through a defined name (for example, `=CategoryList`, where the name refers to `=Table1[[#Data],[Category]]`), or use the **INDIRECT** function, as shown in the second example. A defined name follows the table when the table is renamed. **INDIRECT** refers to the table by text, so the rule stops matching after the table is renamed; it's also a volatile function.
+As in the **Data Validation** dialog box, **Formula1** and **Formula2** can't contain a structured reference to a table, such as `=Table1[Category]`, `=COUNTIF(Table1[Category],A2)>0`, or `=MAX(Table1[Amount])`. Passing one causes run-time error 1004 ("Application-defined or object-defined error"), even though the same reference works in a worksheet formula.
+
+To base a rule on a table column, refer to the column through a defined name (for example, `=CategoryList`, where the name refers to `=Table1[[#Data],[Category]]`), or use the **INDIRECT** function, as shown in the second example. A defined name is updated when the table or the column is renamed. **INDIRECT** refers to the table and the column by text, so after either is renamed, the rule rejects every value. **INDIRECT** is also a volatile function.
 
 ## Example
 

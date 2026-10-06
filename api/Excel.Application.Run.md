@@ -6,7 +6,7 @@ f1_keywords:
 api_name:
 - Excel.Application.Run
 ms.assetid: 3e0167ab-b101-018f-0f89-ada116b8bb72
-ms.date: 04/05/2019
+ms.date: 10/06/2026
 ms.localizationpriority: medium
 ---
 
@@ -40,6 +40,39 @@ Variant
 You cannot use named arguments with this method. Arguments must be passed by position.
 
 The **Run** method returns whatever the called macro returns.
+
+### Error handling
+
+Errors aren't passed from the called macro to the procedure that calls **Run**. If the called macro raises a run-time error that it doesn't handle (for example, by using the **[Err.Raise](../Language/Reference/User-Interface-Help/raise-method.md)** method), Excel displays the run-time error dialog box at that point, even if the calling procedure has an enabled error handler set with **[On Error GoTo](../Language/Reference/User-Interface-Help/on-error-statement.md)**. The dialog box is displayed even when Excel isn't visible, so unattended code stops until someone responds to it. After the user chooses **End**, the calling chain is ended. When **Run** is called through Automation, the client receives a generic error instead of the original error number and description.
+
+If the called macro executes an **[End](../Language/Reference/User-Interface-Help/end-statement.md)** statement, the calling procedure stops too, and the statement after **Run** isn't executed. Module-level variables in the calling project are reset.
+
+To report a failure to the caller, handle errors inside the called macro and return a value that indicates success or failure, as shown in the following example.
+
+
+## Example
+
+In this example, the **ImportData** function handles its own errors and returns **False** if it fails. The calling procedure checks the return value instead of relying on its own error handler.
+
+```vb
+' Called through Application.Run
+Public Function ImportData(ByVal path As String) As Boolean
+    On Error GoTo ErrorHandler
+    Workbooks.Open path
+    ' ... process the data ...
+    ImportData = True
+    Exit Function
+ErrorHandler:
+    Debug.Print "ImportData failed: " & Err.Number & " " & Err.Description
+    ImportData = False
+End Function
+
+Sub CallImportData()
+    If Not Application.Run("'Tools.xlsm'!ImportData", "C:\Data\input.xlsx") Then
+        MsgBox "The import failed."
+    End If
+End Sub
+```
 
 
 

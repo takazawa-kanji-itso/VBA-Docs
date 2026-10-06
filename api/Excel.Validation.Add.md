@@ -46,7 +46,9 @@ The **Add** method requires different arguments, depending on the validation typ
 
 As in the **Data Validation** dialog box, **Formula1** and **Formula2** can't contain a structured reference to a table, such as `=Table1[Category]`, `=COUNTIF(Table1[Category],A2)>0`, or `=MAX(Table1[Amount])`. Passing one causes run-time error 1004 ("Application-defined or object-defined error"), even though the same reference works in a worksheet formula.
 
-To base a rule on a table column, refer to the column through a defined name (for example, `=CategoryList`, where the name refers to `=Table1[[#Data],[Category]]`), or use the **INDIRECT** function, as shown in the second example. A defined name is updated when the table or the column is renamed. **INDIRECT** refers to the table and the column by text, so after either is renamed, the rule rejects every value. **INDIRECT** is also a volatile function.
+To base a rule on a table column, refer to the column through a defined name, as shown in the second example. For example, define a name CategoryList that refers to `=Table1[Category]` (on the **Formulas** tab, choose **Define Name**), and pass `"=CategoryList"` as **Formula1**. The name is updated when the table or the column is renamed, and the list grows when rows are added to the table.
+
+If you can't use a defined name, you can pass the reference as text to the **INDIRECT** function, for example `"=INDIRECT(""Table1[Category]"")"`. Because **INDIRECT** refers to the table and the column by text, the rule rejects every value after either is renamed. **INDIRECT** is also a volatile function.
 
 ## Example
 
@@ -64,13 +66,13 @@ With Range("e5").Validation
 End With
 ```
 
-This example adds a drop-down list to cell D2 on Sheet1 whose items are the values in the Category column of the table Table1. Passing `"=Table1[Category]"` directly as **Formula1** would cause run-time error 1004.
+This example adds a drop-down list to cell D2 on Sheet1 whose items are the values in the Category column of the table Table1. It assumes that the workbook has a defined name CategoryList that refers to `=Table1[Category]`. Passing `"=Table1[Category]"` directly as **Formula1** would cause run-time error 1004.
 
 ```vb
 With Worksheets("Sheet1").Range("D2").Validation
     .Delete
     .Add Type:=xlValidateList, AlertStyle:=xlValidAlertStop, _
-        Formula1:="=INDIRECT(""Table1[Category]"")"
+        Formula1:="=CategoryList"
 End With
 ```
 

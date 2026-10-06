@@ -31,7 +31,7 @@ The **Value** property returns **True** for a cell that doesn't have data valida
 
 For a blank cell, the result depends on the **[IgnoreBlank](Excel.Validation.IgnoreBlank.md)** property. If **IgnoreBlank** is **True** (the default), a blank cell is reported as valid. If it's **False**, a blank cell is checked against the validation criteria like any other value. For example, a whole number rule that allows 0 to 100 treats a blank cell as 0 and reports it as valid, while a rule that allows 1 to 100 reports it as invalid. A list rule reports a blank cell as invalid.
 
-Data validation is evaluated when a user enters a value in the cell. Values that are pasted into the cell or assigned by code (for example, through the **[Range.Value](Excel.Range.Value.md)** property) aren't validated when they're written, so a cell can contain a value that doesn't meet its own validation criteria. You can use the **Value** property to find such cells afterward.
+Data validation is evaluated when a user enters a value in the cell. Values that are assigned by code (for example, through the **[Range.Value](Excel.Range.Value.md)** property), pasted as values only (for example, by using **Paste Special** > **Values**), or pasted as text from another application aren't validated when they're written, so a cell can contain a value that doesn't meet its own validation criteria. You can use the **Value** property to find such cells afterward. Note that a regular paste from another cell replaces the data validation of the destination cell with that of the source cell, and removes it if the source cell has none.
 
 
 ## Example

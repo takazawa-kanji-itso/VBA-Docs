@@ -47,7 +47,7 @@ If the called macro raises a run-time error that it doesn't handle (for example,
 
 Errors that the **Run** method itself raises, such as the error that occurs when the specified macro can't be found, are passed to the calling procedure and can be handled by its error handler.
 
-As with an ordinary procedure call, an **[End](../Language/Reference/User-Interface-Help/end-statement.md)** statement in the called macro stops all running macros, including the calling procedure, so the statement after **Run** isn't executed. Module-level variables are reset both in the workbook that contains the called macro and in the workbook of the calling procedure.
+As with an ordinary procedure call, an **[End](../Language/Reference/User-Interface-Help/end-statement.md)** statement in the called macro stops all running macros, including the calling procedure, so the statement after **Run** isn't executed. Module-level variables are reset, including those in the workbook that contains the called macro and in the workbook of the calling procedure.
 
 Changes that the called macro makes to a **ByRef** argument aren't returned to the calling procedure. To report a failure to the caller, handle errors inside the called macro and return a value that indicates success or failure, as shown in the following example.
 

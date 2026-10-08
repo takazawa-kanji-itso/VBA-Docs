@@ -25,7 +25,9 @@ _expression_ A variable that represents a **[Queries](excel.queries.md)** object
 
 The default value for a new workbook is **False**.
 
-This property corresponds to the **Privacy** options for **Current Workbook** in the **Query Options** dialog box (on the **Data** tab, choose **Get Data** > **Query Options**). **True** corresponds to **Ignore the Privacy levels and potentially improve performance**, and **False** corresponds to **Combine data according to your Privacy Level settings for each source**. The **Privacy** setting in the **Global** section of the **Query Options** dialog box can override this setting.
+This property corresponds to the **Privacy** options for **Current Workbook** in the **Query Options** dialog box (on the **Data** tab, choose **Get Data** > **Query Options**). **True** corresponds to **Ignore the Privacy levels and potentially improve performance**, and **False** corresponds to **Combine data according to your Privacy Level settings for each source**.
+
+This property takes effect only when the **Privacy** option in the **Global** section of the **Query Options** dialog box is set to **Combine data according to each file's Privacy Level settings**. If that option is set to **Always combine data according to your Privacy Level settings for each source** or **Always Ignore the Privacy levels and potentially improve performance**, the global option is used instead of this property.
 
 The setting is stored in the workbook. If you set **FastCombine** and then save the workbook, the value is kept when the workbook is opened again. If you close the workbook without saving it, the change is discarded.
 
